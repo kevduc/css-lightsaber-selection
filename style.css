@@ -84,7 +84,7 @@ input {
 }
 #dark + label,
 #dark:checked ~ .lightsaber {
-  --blade-color: rgba(0, 0, 0, 0.9);
+  --blade-color: rgba(0 0 0 / 0.9);
   --position: 7;
 }
 
@@ -111,8 +111,6 @@ label:not(.handle) {
 }
 
 #on-off:checked ~ label:not(.handle) {
-  display: block;
-
   transition-duration: 80ms, 500ms, 500ms; /* Labels appear slower */
   transition-delay: 0, 410ms, 410ms; /* Delay to appear */
 
