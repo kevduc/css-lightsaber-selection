@@ -2,6 +2,7 @@
 
 :root {
   --background: #1e1e1e;
+
   --lightness: 40%;
   --saturation: 100%;
 
@@ -16,6 +17,7 @@
   --shadow-color: white; /* Default saber shadow color (used for darksaber only) */
 }
 
+/* Usual reset */
 *,
 *::before,
 *::after {
@@ -25,25 +27,32 @@
 }
 
 body {
-  --gap: 1.5rem;
-  --num-columns: 7;
-  --reference-position: 4;
+  --num-columns: 7; /* Number of colors */
+  --reference-position: 4; /* Initial posiion for the saber */
   --min-label-width: 6ch;
 
-  margin: 0;
+  /* Prevent text selection (comes in the way of user interactions) */
   user-select: none;
-  min-height: 100vh;
+
+  /* No highlight when clicking a label on a mobile device (no need, there's already feedback with neon effect when a color is selected) */
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 
-  font-family: 'Source Sans Pro', sans-serif;
-  color: #f5f5f5;
+  /* Format block */
+  margin: 0;
+  min-height: 100vh;
   background-color: var(--background);
 
+  /* Format text */
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #f5f5f5;
+
+  /* Grid */
   display: inline-grid;
   grid-template: 1fr / repeat(var(--num-columns), 1fr);
   place-items: center;
-  padding: var(--gap);
+  --gap: 1.5rem; /* Same size for gaps between elements and between elements and the border of the viewport */
   gap: var(--gap);
+  padding: var(--gap);
 }
 
 /* Hide radio buttons and checkboxes */
@@ -51,8 +60,10 @@ input {
   display: none;
 }
 
-/* Colors and Positions */
-
+/*
+ * Define colors and positions for each label.
+ * Pass on the selected color and position to the lightsaber.
+ */
 #blue + label,
 #blue:checked ~ .lightsaber {
   --shadow-color: var(--blue);
@@ -92,41 +103,56 @@ input {
 /* Labels */
 
 label:not(.handle) {
+  /* Position label in grid */
   grid-row: 1;
   grid-column: var(--position);
+
+  /* Hint it can be clicked */
   cursor: pointer;
 
+  /* Prevent inequal fractions when grid collapses to the minimum (else min-width would be equivalent to fit-content, but texts in labels don't all have the same width) */
+  min-width: var(--min-label-width);
+
+  /* Format text */
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
   font-size: max(2.2vw, 0.65rem);
-  min-width: var(--min-label-width);
 
+  /* Dark shadow around text labels, for nicer contrast */
   text-shadow: 0 0 0.2rem rgba(0 0 0 / 1), 0 0 0.5rem rgba(0 0 0 / 1), 0 0 1rem rgba(0 0 0 / 0.5), 0 0 2rem rgba(0 0 0 / 0.2);
 
+  /* Delays for the opacity and visibility to give time to the blade to expand */
   transition: all 80ms ease-out, opacity 350ms ease-in 280ms, visibility 350ms ease-in 280ms;
 
+  /* Hide labels by default (when saber is off) */
   pointer-events: none;
   visibility: hidden;
   opacity: 0%;
 }
 
+/*
+ * Tweak transitions when central color is selected.
+ * Gives quicker feedback to the user, prevents multiple clicks that would cancel the animation and confuse the user.
+ */
 #blue:checked ~ label:not(.handle) {
   transition-delay: 0, 160ms, 160ms; /* Faster because already positioned */
 }
 
+/* Tweak transitions when labels need to disappear (saber turns off) */
 #on-off:not(:checked) ~ label:not(.handle) {
   transition-duration: 250ms; /* Labels disappear faster */
   transition-delay: 0ms; /* No delay to disappear */
 }
 
+/* Show labels when saber is on */
 #on-off:checked ~ label:not(.handle) {
   pointer-events: auto;
   visibility: visible;
   opacity: 100%;
 }
 
-/* Highlight for labels */
+/* Neon effect for text labels. Active when focused, hovered or selected */
 label:not(.handle):hover,
 label:not(.handle):focus,
 input:checked + label:not(.handle) {
@@ -140,43 +166,75 @@ input:checked + label:not(.handle) {
 /* Lightsaber */
 
 .lightsaber {
+  /*
+   * Used as a scale factor in the definition of the saber dimensions.
+   * Change to enlarge or shrink the saber.
+   */
   --scale: 1.2;
 
+  /* Saber should be at default position when it's off, else use the position given by the selected color */
   --resolved-position: var(--default-position, var(--position));
+  /* Center the saber at the reference position (most likely the center) */
   --delta-position: calc(var(--resolved-position) - var(--reference-position));
 
+  /* Position the saber on the grid (default position if off, else position given by selected color) */
   grid-column: var(--reference-position);
   grid-row: 1;
+
+  /* To position the blade relative to the handle */
   position: relative;
+
+  /* Vertically position the saber to give space for the blade */
   margin-top: calc(var(--scale) * (30vh + 3vw + 7em));
 
+  /* Horizontally position the saber based on it's given grid position (default if off, else the one given by the selected color) */
   transform: translateX(
-    calc(var(--delta-position) * max((100vw - var(--gap)) / var(--num-columns), var(--min-label-width) + var(--gap) / 4))
+    /*
+     * Find the size of a gap between 2 labels:
+     *  - Based on the total size of the viewport if the gridis fully inside the viewport
+     *  - Based on the minimum label width if the grid is overflowing the viewport (because overflow => grid is shrinked to it's minimum and cannot shrink more)
+     * Then offset the saber by this gap size multiplied by the number of columns between the saber and the reference position.
+     */
+      calc(var(--delta-position) * max((100vw - var(--gap)) / var(--num-columns), var(--min-label-width) + var(--gap) / 4))
   );
+
+  /* Animating grid-column changes is not possible, so we use a translate transform instead (see just above) with a transition. */
   /* transition: grid-column 200ms ease-out 100ms; */
-  transition: transform 230ms cubic-bezier(0.2, 0.02, 0.33, 1.03);
+  transition: transform 280ms cubic-bezier(0.2, 0.02, 0.33, 1.03);
 }
 
+/* Define default position at reference when the saber is off */
 #on-off:not(:checked) ~ .lightsaber {
   --default-position: var(--reference-position);
+
+  /* Tweak animations when saber turns off */
   transition-delay: 60ms; /* Gives time to start retracting the blade */
-  transition-duration: 500ms; /* Slower to go back to reference position */
+  transition-duration: 500ms; /* Smoother to go back to reference position */
 }
 
 /* Handle */
 
 .handle {
+  /* Make sure it's a block */
   display: block;
+
+  /* Hint it can be clicked */
   cursor: pointer;
 
+  /* Define the size of both the handle and the blade (because the latter is defined as a percentage of the handle size) */
   width: calc(var(--scale) * (0.8vh + 0.35vw));
   height: calc(var(--scale) * (7.2vh + 3.15vw));
+  /* Prevent the saber from becoming too small */
   min-width: 0.75rem;
   min-height: 6.5rem;
 
-  border-radius: 0 0 100vw 100vw;
+  /* Design */
+
+  border-radius: 0 0 100vw 100vw; /* Round bottom end */
+  /* Inner shadow gives an illusion of 3D volume (cylinder), and outer shadow doesn't show, only here to make the box-shadow transition work */
   box-shadow: inset 0 0 calc(var(--scale) * 0.4rem) calc(var(--scale) * (-0.025rem)) black, 0 0 0 rgba(0 0 0 / 0.5);
 
+  /* Vertical color pattern */
   background-image: linear-gradient(
     silver 0 10%,
     hsl(39 75% 50%) 0 14%,
@@ -199,97 +257,143 @@ input:checked + label:not(.handle) {
     silver 0 100%
   );
 
-  transition: box-shadow 1000ms ease;
+  /* Smooth transiiton to highlight the handle when it's hovered or focused */
+  transition: box-shadow 500ms ease;
 }
 
+/* Hint you can interact with the handle */
 .handle:hover,
 .handle:focus {
+  /*
+   * Keep the same inner shadow (have to rewrite it here else we loose it)
+   * and add a dim highlight around the handle when hovered or focused.
+   */
   box-shadow: inset 0 0 calc(var(--scale) * 0.4rem) calc(var(--scale) * (-0.025rem)) black,
     0 0 calc(var(--scale) * 0.8rem) rgba(255 255 255 / 0.2);
 }
 
+/* When saber is on, the blade lights up the handle (shown with a lighter box-shadow) */
 #on-off:checked ~ .lightsaber > .handle {
-  transition-duration: 120ms;
+  transition-duration: 120ms; /* Quickly update the box-shadow */
+  /* Highlight the handle */
   box-shadow: inset 0 0 calc(var(--scale) * 0.15rem) calc(var(--scale) * 0.07rem) rgba(0 0 0 / 0.6);
-  animation: none;
 }
 
 /* Blade */
 
 .blade {
-  position: absolute;
+  /* Position */
+  position: absolute; /* Position relative to the handle */
+  /* Sits on top of the handle, but slightly lower to give the impression it comes from inside the handle */
   bottom: calc(100% - var(--scale) * 0.15rem);
 
-  --height: 350%; /* Used for on state */
-  height: 0;
-  width: 100%;
+  /* Size */
+  /* Used to turn on the saber (expand the blade when on) */
+  --height: 350%;
+  height: 0; /* Saber is off by default */
+  width: 100%; /* Match the handle width */
+
+  /* Shape */
+  /*
+   * Round tip (need to use extra large values to have circle segments)
+   * and slight outward curve at the base to give the impression the blade comes from inside the handle.
+   */
   border-radius: 100vw 100vw 100vw 100vw / 100vw 100vw 40vw 40vw;
 
+  /* Color */
+  /* Color for the core of the blade */
   background-color: var(--blade-color);
+  /* Neon effect using selected color */
   box-shadow: inset 0 0 0.2rem var(--shadow-color), 0 0 0.5rem var(--shadow-color), 0 0 1rem var(--shadow-color),
     0 0 1.5rem var(--shadow-color), 0 0 2rem var(--shadow-color), 0 0 4rem var(--shadow-color), 0 0 5rem var(--shadow-color),
     0 0 10rem var(--shadow-color), 0 0 15rem var(--shadow-color), 0 0 20rem var(--shadow-color);
 
+  /*
+   * - Animate the blade height to turn the saber on and off.
+   * - Smooth color transition of the blade when selecting a different color (neon and core, using repectively box-shadow and background-color) 
+   */
   transition: height 130ms cubic-bezier(0.4, 0, 0.8, 0.1) 250ms, box-shadow 350ms ease-out, background-color 350ms ease-out;
-  transform-origin: bottom;
+  transform-origin: bottom; /* Blade expands from the bottom (from the top of the handle) */
 }
 
+/* Expand the blade when the saber turns on */
+#on-off:checked ~ .lightsaber > .blade {
+  height: var(--height);
+}
+
+/* Tweak transition when the saber turns on and is already properly horizontally positioned (is at reference point) */
 #blue:checked ~ .lightsaber > .blade {
-  transition-delay: 90ms; /* Quicker feedback to avoid user from clicking a second time */
+  /*
+   * The saber doesn't need to slide horizontally, no need for a long delay.
+   * Allows for quicker visual feedback to avoid user from clicking a second time, cancelling the animation and being confused.
+   */
+  transition-delay: 90ms;
 }
 
 /* Slightly different shape for the darksaber blade */
 #dark:checked ~ .lightsaber > .blade {
+  /*
+   * Make the blade thinner at the top by changing the curve on the left side, starting from the top (top left corner),
+   * and keep the slight outward curve at the bottom.
+   */
   border-radius: 100% 50% 50% 50% / 100% 0.5rem 0.4rem 0.4rem;
 }
 
+/* Tweak heigh transition to retract the blade when the saber turns off */
 #on-off:not(:checked) ~ .lightsaber > .blade {
-  transition-timing-function: cubic-bezier(0.1, 0.35, 0.4, 1); /* Slow start to retract */
-  /* transition-duration: 150ms; */
+  /*
+   * Fast start to retract and be lower than the labels
+   * (faster than the saber horizontally sliding back to the reference position)
+   */
+  transition-timing-function: cubic-bezier(0.1, 0.35, 0.4, 1);
   transition-delay: 0ms; /* No delay to retract */
-}
-
-#on-off:checked ~ .lightsaber > .blade {
-  height: var(--height);
 }
 
 /* GitHub link */
 
 .github {
   display: block;
+
+  /* Format block */
   width: 3rem;
   overflow: hidden;
   border: 1px solid black;
-  border-right: none;
-  border-radius: 100vw 0 0 100vw;
-  background-color: #111;
+  border-right: none; /* No border on the right (against the side of the viewport) */
+  border-radius: 100vw 0 0 100vw; /* Round left end */
+  background-color: #111; /* Same as GitHub button background color */
 
+  /* Position at the bottom right of the screen, fixed */
   position: fixed;
   right: 0;
   bottom: 1.5rem;
-  padding-left: 0.2rem;
 
+  /* Format the text placeholder (shows when the image cannot load) */
   color: white;
   text-decoration: none;
   white-space: nowrap;
   font-weight: normal;
   font-size: 1.4rem;
+  padding-left: 0.2rem;
 
+  /* Neon effect and slide left */
   transition: width 500ms ease, box-shadow 200ms ease;
 }
 
+/* Format the text placeholder (shows when the image cannot load) */
 .github > object::first-letter {
   font-size: 1.6rem;
   vertical-align: baseline;
 }
 
+/* Neon effect when hovered or focused, and expand to the left */
 .github:hover,
 .github:focus {
-  width: 13.3rem;
   outline: none;
-  box-shadow: 0 0 1rem white;
+  width: 13.3rem;
+  box-shadow: 0 0 0.5rem white;
 }
 
+/* Format GitHub button */
 .github > object {
   display: block;
   width: 14rem;
