@@ -7,8 +7,8 @@
 
   --blue: hsl(200 var(--saturation) var(--lightness));
   --green: hsl(115 var(--saturation) var(--lightness));
-  --yellow: hsl(55 var(--saturation) var(--lightness));
-  --orange: hsl(37 var(--saturation) var(--lightness));
+  --yellow: hsl(50 var(--saturation) var(--lightness));
+  --orange: hsl(35 var(--saturation) var(--lightness));
   --purple: hsl(290 var(--saturation) var(--lightness));
   --red: hsl(0 var(--saturation) var(--lightness));
 
