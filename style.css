@@ -104,7 +104,7 @@ label:not(.handle) {
 
   text-shadow: 0 0 0.2rem rgba(0 0 0 / 1), 0 0 0.5rem rgba(0 0 0 / 1), 0 0 1rem rgba(0 0 0 / 0.5), 0 0 2rem rgba(0 0 0 / 0.2);
 
-  transition: all 80ms ease-out, opacity 350ms ease-in 230ms, visibility 350ms ease-in 230ms;
+  transition: all 80ms ease-out, opacity 350ms ease-in 280ms, visibility 350ms ease-in 280ms;
 
   pointer-events: none;
   visibility: hidden;
@@ -112,11 +112,11 @@ label:not(.handle) {
 }
 
 #blue:checked ~ label:not(.handle) {
-  transition-delay: 150ms; /* Faster because already positioned */
+  transition-delay: 160ms; /* Faster because already positioned */
 }
 
 #on-off:not(:checked) ~ label:not(.handle) {
-  transition-duration: 350ms; /* Labels disappear faster */
+  transition-duration: 250ms; /* Labels disappear faster */
   transition-delay: 0ms; /* No delay to disappear */
 }
 
@@ -221,12 +221,12 @@ input:checked + label:not(.handle) {
     0 0 1.5rem var(--shadow-color), 0 0 2rem var(--shadow-color), 0 0 4rem var(--shadow-color), 0 0 5rem var(--shadow-color),
     0 0 10rem var(--shadow-color), 0 0 15rem var(--shadow-color), 0 0 20rem var(--shadow-color);
 
-  transition: height 140ms cubic-bezier(0.4, 0, 0.8, 0.1) 170ms, box-shadow 350ms ease-out, background-color 350ms ease-out;
+  transition: height 130ms cubic-bezier(0.4, 0, 0.8, 0.1) 250ms, box-shadow 350ms ease-out, background-color 350ms ease-out;
   transform-origin: bottom;
 }
 
 #blue:checked ~ .lightsaber > .blade {
-  transition-delay: 80ms; /* Quicker feedback to avoid user from clicking a second time */
+  transition-delay: 90ms; /* Quicker feedback to avoid user from clicking a second time */
 }
 
 /* Slightly different shape for the darksaber blade */
