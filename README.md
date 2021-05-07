@@ -1,7 +1,7 @@
 # css-lightsaber-selection
 
 View your favorite lightsaber glow, made with 100% CSS.  
-👉 [Try here](https://kevduc.github.io/css-lightsaber-selection)  
+👉 [Try it here](https://kevduc.github.io/css-lightsaber-selection)  
 ✏ [View on CodePen](https://codepen.io/KevDuc/pen/ExWaaVB)  
 🖖 [Different version](https://codepen.io/KevDuc/pen/QWpwLeE)
 
