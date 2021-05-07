@@ -1,0 +1,25 @@
+{
+  "name": "css-lightsaber-selection",
+  "version": "1.0.0",
+  "description": "View your favorite lightsaber glow, made with 100% CSS",
+  "main": "index.html",
+  "scripts": {
+    "start": "start index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevduc/css-lightsaber-selection.git"
+  },
+  "keywords": [
+    "css",
+    "starwars",
+    "lightsaber",
+    "kevinpowell"
+  ],
+  "author": "kevduc",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/kevduc/css-lightsaber-selection/issues"
+  },
+  "homepage": "https://github.com/kevduc/css-lightsaber-selection#readme"
+}
