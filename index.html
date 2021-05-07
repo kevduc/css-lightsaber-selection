@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pure CSS Lightsaber</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Largely inspired from Kevin Powell https://codepen.io/kevinpowell/pen/jOygveP -->
+
+    <input type="checkbox" name="on-off" id="on-off" />
+
+    <input type="radio" name="color" id="blue" checked />
+    <label for="blue">Jedi Guardian</label>
+    <input type="radio" name="color" id="green" />
+    <label for="green">Jedi Consular</label>
+    <input type="radio" name="color" id="yellow" />
+    <label for="yellow">Jedi Sentinel</label>
+    <input type="radio" name="color" id="orange" />
+    <label for="orange">Jedi Strength</label>
+    <input type="radio" name="color" id="purple" />
+    <label for="purple">Jedi Balance</label>
+    <input type="radio" name="color" id="red" />
+    <label for="red">Sith</label>
+    <input type="radio" name="color" id="dark" />
+    <label for="dark">DarkSaber</label>
+
+    <div class="lightsaber">
+      <label for="on-off" class="handle"></label>
+      <div class="blade"></div>
+    </div>
+
+    <!-- Prevent animations from firing when page loads: https://stackoverflow.com/questions/14389566/stop-css-transition-from-firing-on-page-load -->
+    <script>
+      0
+    </script>
+  </body>
+</html>
