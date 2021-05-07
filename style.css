@@ -390,7 +390,7 @@ input:checked + label:not(.handle) {
 .github:focus {
   outline: none;
   width: 13.3rem;
-  box-shadow: 0 0 0.5rem white;
+  box-shadow: 0 0 0.2rem white, 0 0 0.6rem white;
 }
 
 /* Format GitHub button */
