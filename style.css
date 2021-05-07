@@ -351,7 +351,7 @@ input:checked + label:not(.handle) {
 
 /* GitHub link */
 
-.github {
+.ribbon {
   display: block;
 
   /* Format block */
@@ -360,12 +360,9 @@ input:checked + label:not(.handle) {
   border: 1px solid black;
   border-right: none; /* No border on the right (against the side of the viewport) */
   border-radius: 100vw 0 0 100vw; /* Round left end */
-  background-color: #111; /* Same as GitHub button background color */
 
-  /* Position at the bottom right of the screen, fixed */
+  /* Always on screen */
   position: fixed;
-  right: 0;
-  bottom: 1.5rem;
 
   /* Format the text placeholder (shows when the image cannot load) */
   color: white;
@@ -380,23 +377,55 @@ input:checked + label:not(.handle) {
 }
 
 /* Format the text placeholder (shows when the image cannot load) */
-.github > object::first-letter {
+.ribbon > object::first-letter {
   font-size: 1.6rem;
   vertical-align: baseline;
 }
 
 /* Neon effect when hovered or focused, and expand to the left */
-.github:hover,
-.github:focus {
+.ribbon:hover,
+.ribbon:focus {
   outline: none;
-  width: 13.3rem;
   box-shadow: 0 0 0.2rem white, 0 0 0.6rem white;
 }
 
-/* Format GitHub button */
-.github > object {
+.github:hover,
+.github:focus {
+  width: 13.3rem;
+}
+
+.codepen:hover,
+.codepen:focus {
+  width: 15.5rem;
+}
+
+/* Format button */
+.ribbon > object {
   display: block;
-  width: 14rem;
   padding: 0.2rem 0;
   border-radius: 100vw 0 0 100vw;
+}
+
+.github {
+  background-color: #111; /* Same as GitHub button background color */
+
+  /* Position at the bottom right of the screen */
+  right: 0;
+  bottom: 1rem;
+}
+
+.github > object {
+  width: 14rem;
+}
+
+.codepen {
+  background-color: #333; /* Same as CodePen button background color */
+
+  /* Position at the bottom right of the screen */
+  right: 0;
+  bottom: 4.2rem;
+}
+
+.codepen > object {
+  width: 15.5rem;
 }
