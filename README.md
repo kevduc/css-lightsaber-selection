@@ -6,4 +6,4 @@ View your favorite lightsaber glow, made with 100% CSS.
 
 ## Credit
 
-Largely inspired from Kevin Powell's CSS Only Lightsaber: [YouTube](https://youtu.be/CBw9-K6hYVA) – [CodePen](https://codepen.io/kevinpowell/pen/jOygveP)
+Largely inspired from [Kevin Powell](https://github.com/kevin-powell)'s CSS Only Lightsaber: [YouTube](https://youtu.be/CBw9-K6hYVA) – [CodePen](https://codepen.io/kevinpowell/pen/jOygveP)
