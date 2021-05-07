@@ -140,13 +140,15 @@ input:checked + label:not(.handle) {
 /* Lightsaber */
 
 .lightsaber {
+  --scale: 1.2;
+
   --resolved-position: var(--default-position, var(--position));
   --delta-position: calc(var(--resolved-position) - var(--reference-position));
 
   grid-column: var(--reference-position);
   grid-row: 1;
   position: relative;
-  margin-top: calc(30vh + 3vw + 7em);
+  margin-top: calc(var(--scale) * (30vh + 3vw + 7em));
 
   transform: translateX(
     calc(var(--delta-position) * max((100vw - var(--gap)) / var(--num-columns), var(--min-label-width) + var(--gap) / 4))
@@ -167,14 +169,14 @@ input:checked + label:not(.handle) {
   display: block;
   cursor: pointer;
 
-  width: calc(0.8vh + 0.35vw);
-  height: calc(7.2vh + 3.15vw);
+  width: calc(var(--scale) * (0.8vh + 0.35vw));
+  height: calc(var(--scale) * (7.2vh + 3.15vw));
   min-width: 0.75rem;
   min-height: 6.5rem;
 
   border-radius: 0 0 100vw 100vw;
 
-  box-shadow: inset 0 0 0.4rem -0.025rem black;
+  box-shadow: inset 0 0 calc(var(--scale) * 0.4rem) calc(var(--scale) * (-0.025rem)) black;
 
   background-image: linear-gradient(
     silver 0 10%,
@@ -202,14 +204,14 @@ input:checked + label:not(.handle) {
 }
 
 #on-off:checked ~ .lightsaber > .handle {
-  box-shadow: inset 0 0 0.15rem 0.07rem rgba(0 0 0 / 0.6);
+  box-shadow: inset 0 0 calc(var(--scale) * 0.15rem) calc(var(--scale) * 0.07rem) rgba(0 0 0 / 0.6);
 }
 
 /* Blade */
 
 .blade {
   position: absolute;
-  bottom: calc(100% - 0.15rem);
+  bottom: calc(100% - var(--scale) * 0.15rem);
 
   --height: 350%; /* Used for on state */
   height: 0;
@@ -266,7 +268,7 @@ input:checked + label:not(.handle) {
   font-weight: normal;
   font-size: 1.4rem;
 
-  transition: width 800ms ease, box-shadow 200ms ease;
+  transition: width 500ms ease, box-shadow 200ms ease;
 }
 
 .github > object::first-letter {
