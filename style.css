@@ -104,7 +104,7 @@ label:not(.handle) {
 
   text-shadow: 0 0 0.2rem rgba(0 0 0 / 1), 0 0 0.5rem rgba(0 0 0 / 1), 0 0 1rem rgba(0 0 0 / 0.5), 0 0 2rem rgba(0 0 0 / 0.2);
 
-  transition: all 80ms ease-out, opacity 400ms ease-in 350ms, visibility 400ms ease-in 350ms;
+  transition: all 80ms ease-out, opacity 350ms ease-in 200ms, visibility 350ms ease-in 200ms;
 
   pointer-events: none;
   visibility: hidden;
@@ -112,7 +112,7 @@ label:not(.handle) {
 }
 
 #on-off:not(:checked) ~ label:not(.handle) {
-  transition-duration: 300ms; /* Labels disappear faster */
+  transition-duration: 350ms; /* Labels disappear faster */
   transition-delay: 0ms; /* No delay to disappear */
 }
 
@@ -148,7 +148,7 @@ input:checked + label:not(.handle) {
     calc(var(--delta-position) * max((100vw - var(--gap)) / var(--num-columns), var(--min-label-width) + var(--gap) / 4))
   );
   /* transition: grid-column 200ms ease-out 100ms; */
-  transition: transform 350ms ease;
+  transition: transform 300ms ease;
 }
 
 #on-off:not(:checked) ~ .lightsaber {
@@ -217,7 +217,7 @@ input:checked + label:not(.handle) {
     0 0 1.5rem var(--shadow-color), 0 0 2rem var(--shadow-color), 0 0 4rem var(--shadow-color), 0 0 5rem var(--shadow-color),
     0 0 10rem var(--shadow-color), 0 0 15rem var(--shadow-color), 0 0 20rem var(--shadow-color);
 
-  transition: height 150ms cubic-bezier(0.4, 0, 0.8, 0.1) 270ms, box-shadow 500ms ease-out, background-color 500ms ease-out;
+  transition: height 140ms cubic-bezier(0.4, 0, 0.8, 0.1) 150ms, box-shadow 500ms ease-out, background-color 500ms ease-out;
   transform-origin: bottom;
 }
 
