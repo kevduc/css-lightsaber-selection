@@ -153,8 +153,7 @@ label:not(.handle) {
 }
 
 /* Neon effect for text labels. Active when focused, hovered or selected */
-label:not(.handle):hover,
-label:not(.handle):focus,
+label:not(.handle):is(:hover, :focus),
 input:checked + label:not(.handle) {
   z-index: 99;
   color: var(--blade-color);
@@ -262,8 +261,7 @@ input:checked + label:not(.handle) {
 }
 
 /* Hint you can interact with the handle */
-.handle:hover,
-.handle:focus {
+.handle:is(:hover, :focus) {
   /*
    * Keep the same inner shadow (have to rewrite it here else we loose it)
    * and add a dim highlight around the handle when hovered or focused.
@@ -384,19 +382,16 @@ input:checked + label:not(.handle) {
 }
 
 /* Neon effect when hovered or focused, and expand to the left */
-.ribbon:hover,
-.ribbon:focus {
+.ribbon:is(:hover, :focus) {
   outline: none;
   box-shadow: 0 0 0.2rem white, 0 0 0.6rem white;
 }
 
-.github:hover,
-.github:focus {
+.github:is(:hover, :focus) {
   width: 13.3rem;
 }
 
-.codepen:hover,
-.codepen:focus {
+.codepen:is(:hover, :focus) {
   width: 14.5rem;
 }
 
